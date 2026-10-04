@@ -1,0 +1,113 @@
+{
+  "name": "mi primer flujo",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "10c2f24c-91c5-4b35-9f15-42701de03ab2",
+      "name": "When chat message received",
+      "webhookId": "08b9aed7-dabb-4f9c-a867-7cc408064d93"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Eres el asistente de atención al cliente de Haevion, una tienda de accesorios de tecnología. Responde en español, de forma breve y amable. ofrece ayuda humana \nInformación de la tienda:\n- Tiempo de envío: [4 dias]\n- Devoluciones: [hasta un mes despues de la compra \n- Medios de pago: [tarjeta,bancolombia,paypal]\nUsa solo esta información. Si te preguntan algo que no está aquí, no inventes: ofrece contactar a un asesor humano."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        384,
+        0
+      ],
+      "id": "a58c3a9c-d554-45ca-945d-4730adfe3cd2",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        256,
+        208
+      ],
+      "id": "ec24de0e-0fe5-4180-8373-05ea0f6f76cb",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ujGURO4xsHTwsHbl",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        400,
+        208
+      ],
+      "id": "b6e8454a-bc24-47bc-bf69-b9f0129bc407",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "0d934cf1-bdf5-420d-ab4e-4dce527af6db",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "532aa70f0f1ff9bd51d9eb3d3fd64d24381740e04d647ff2c49b89db1749300f"
+  },
+  "nodeGroups": [],
+  "id": "wbYsdk5YOCXx6uTC",
+  "tags": []
+}
